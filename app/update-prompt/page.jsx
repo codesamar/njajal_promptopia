@@ -1,7 +1,7 @@
 "use client";
 
 import Form from "@components/Form";
-import { useRouter, useSearchParams } from "@node_modules/next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const EditPrompt = () => {
