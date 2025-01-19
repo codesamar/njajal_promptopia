@@ -3,7 +3,6 @@
 import Form from "@components/Form";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Suspense } from "react";
 
 const EditPrompt = () => {
   const router = useRouter();
@@ -18,9 +17,18 @@ const EditPrompt = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (searchParams) {
+      const id = searchParams.get("id");
+      setPromptId(id || null)
+    } else {
+        setLoading(false)
+    }
+  }, [searchParams]);
+
+  useEffect(() => {
     const getPromptDetails = async () => {
       if (promptId) {
-        setLoading(true); // Set loading before fetching
+        setLoading(true);
         try {
           const response = await fetch(`/api/prompt/${promptId}`);
           if (!response.ok) {
@@ -60,7 +68,6 @@ const EditPrompt = () => {
       console.log(error);
     } finally {
       setSubmitting(false);
-      setLoading(false);
     }
   };
 
