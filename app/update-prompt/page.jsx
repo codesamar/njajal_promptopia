@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 const EditPrompt = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const promptId = searchParams.get("id");
+  const [promptId, setPromptId] = useState(null);
 
   const [submitting, setSubmitting] = useState(false);
   const [post, setPost] = useState({
@@ -19,9 +19,9 @@ const EditPrompt = () => {
   useEffect(() => {
     if (searchParams) {
       const id = searchParams.get("id");
-      setPromptId(id || null)
+      setPromptId(id || null);
     } else {
-        setLoading(false)
+      setLoading(false);
     }
   }, [searchParams]);
 
@@ -76,17 +76,13 @@ const EditPrompt = () => {
   }
 
   return (
-    <Suspense fallback={<div>Loading form...</div>}>
-      {promptId && (
-        <Form
-          type="Edit"
-          post={post}
-          setPost={setPost}
-          submitting={submitting}
-          handleSubmit={updatePrompt}
-        />
-      )}
-    </Suspense>
+    <Form
+      type="Edit"
+      post={post}
+      setPost={setPost}
+      submitting={submitting}
+      handleSubmit={updatePrompt}
+    />
   );
 };
 
